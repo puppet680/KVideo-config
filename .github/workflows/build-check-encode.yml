@@ -1,8 +1,8 @@
-name: JSON Build, API Check & Encoding
+name: JSON Build & API Check
 
 on:
   schedule:
-    - cron: "0 17 * * *"  # 北京时间凌晨1点运行 (UTC 17:00)
+    - cron: "0 17 * * *"  # 北京时间凌晨1点运行
   push:
     paths:
       - 'KVideo-config.json'
@@ -13,7 +13,7 @@ on:
         default: '斗罗大陆'
 
 jobs:
-  build-check-encode:
+  build-and-check:
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -22,60 +22,35 @@ jobs:
       # 1️⃣ 检出仓库
       - uses: actions/checkout@v4
 
-      # 2️⃣ 安装系统依赖 & 环境
+      # 2️⃣ 安装系统依赖
       - name: Install dependencies
         run: |
           sudo apt-get update
           sudo apt-get install -y jq curl
-          npm install bs58 axios
+          npm install axios
 
-      # 3️⃣ JSON 处理：生成 jingjian.json (适配数组格式)
+      # 3️⃣ JSON 处理：生成 jingjian.json
       - name: Generate jingjian.json
-        run: |
-          # 仅进行格式化，不再访问 .cache_time 或 .api_site
-          jq '.' KVideo-config.json > jingjian.json
+        run: jq '.' KVideo-config.json > jingjian.json
 
-      # 4️⃣ JSON 处理：生成 jin18.json (适配数组格式过滤)
-      - name: Generate jin18.json (strip adult resources)
-        run: |
-          # 针对数组结构，使用 map(select(...)) 根据 group 字段过滤
-          jq 'map(select(.group != "adult"))' KVideo-config.json > jin18.json
-
-      - name: Validate jin18.json
-        run: jq empty jin18.json
+      # 4️⃣ JSON 处理：生成 jin18.json (过滤成人)
+      - name: Generate jin18.json
+        run: jq 'map(select(.group != "adult"))' KVideo-config.json > jin18.json
 
       # 5️⃣ 运行 API 检查脚本
-      # 确保 check_api.js 已适配数组格式
       - name: Run API check
         run: |
           SEARCH_KEY="${{ github.event.inputs.api_name || '斗罗大陆' }}"
           node check_api.js "$SEARCH_KEY"
 
-      # 6️⃣ Base58 编码
-      - name: Encode JSON to Base58
-        run: |
-          cat > encode.js <<'EOF'
-          const fs = require('fs');
-          const bs58 = require('bs58');
-          const files = [
-            { input: 'KVideo-config.json', output: 'KVideo-config.txt' },
-            { input: 'jingjian.json', output: 'jingjian.txt' },
-            { input: 'jin18.json', output: 'jin18.txt' }
-          ];
-          files.forEach(file => {
-            if (!fs.existsSync(file.input)) return;
-            const data = fs.readFileSync(file.input);
-            const encoded = bs58.encode(Buffer.from(data));
-            fs.writeFileSync(file.output, encoded);
-          });
-          EOF
-          node encode.js
-
-      # 7️⃣ 提交并推送
+      # 6️⃣ 提交并推送生成的 JSON 和 报告
       - name: Commit and push changes
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add jingjian.json jin18.json KVideo-config.txt jingjian.txt jin18.txt report.md
-          git commit -m "🤖 自动同步: 接口检测与 Base58 编码 ($(date +'%Y-%m-%d %H:%M'))" || echo "Nothing to commit"
+          
+          # 只添加 JSON 和 Markdown 报告
+          git add jingjian.json jin18.json report.md
+          
+          git commit -m "🤖 自动更新: 接口检测报告 ($(date +'%Y-%m-%d %H:%M'))" || echo "没有文件变化"
           git push
