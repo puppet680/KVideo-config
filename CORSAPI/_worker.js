@@ -53,7 +53,6 @@ function addOrReplacePrefix(obj, newPrefix) {
   const newObj = {}
   for (const key in obj) {
     const lowerKey = key.toLowerCase();
-    // 兼容多种字段名
     if ((lowerKey === 'api' || lowerKey === 'baseurl') && typeof obj[key] === 'string') {
       let apiUrl = obj[key]
       const urlIndex = apiUrl.indexOf('?url=')
@@ -68,14 +67,13 @@ function addOrReplacePrefix(obj, newPrefix) {
 }
 
 /**
- * 带强制刷新逻辑的缓存获取
+ * 自动缓存获取 (1分钟有效期)
  */
-async function getCachedJSON(url, forceFlush = false) {
+async function getCachedJSON(url) {
   const kvAvailable = typeof KV !== 'undefined' && KV && typeof KV.get === 'function'
-  const cacheKey = 'V3_RAW_' + url
+  const cacheKey = 'V4_RAW_' + url
   
   if (kvAvailable) {
-    if (forceFlush) await KV.delete(cacheKey)
     const cached = await KV.get(cacheKey)
     if (cached) {
       try { return JSON.parse(cached) } catch (e) { await KV.delete(cacheKey) }
@@ -83,7 +81,8 @@ async function getCachedJSON(url, forceFlush = false) {
     const res = await fetch(url)
     if (!res.ok) throw new Error(`Fetch failed: ${res.status}`)
     const data = await res.json()
-    await KV.put(cacheKey, JSON.stringify(data), { expirationTtl: 600 })
+    // 缓存设置为 60 秒，确保配置更新能够较快生效
+    await KV.put(cacheKey, JSON.stringify(data), { expirationTtl: 60 })
     return data
   }
   const res = await fetch(url)
@@ -98,24 +97,20 @@ async function handleRequest(request) {
   const formatParam = reqUrl.searchParams.get('format')
   const sourceParam = reqUrl.searchParams.get('source')
   const prefixParam = reqUrl.searchParams.get('prefix')
-  const forceFlush = reqUrl.searchParams.get('flush') === '1'
 
   const currentOrigin = reqUrl.origin
   const defaultPrefix = currentOrigin + '/?url='
 
   if (reqUrl.pathname === '/health') return new Response('OK', { headers: CORS_HEADERS })
-  
-  // 代理逻辑
   if (targetUrlParam) return handleProxyRequest(request, targetUrlParam, currentOrigin)
   
-  // 转换逻辑
   if (formatParam !== null) {
     try {
       const config = FORMAT_CONFIG[formatParam]
       if (!config) return errorResponse('Invalid format', {}, 400)
       const sourceCfg = JSON_SOURCES[sourceParam] || JSON_SOURCES['full']
       
-      const data = await getCachedJSON(sourceCfg.url, forceFlush)
+      const data = await getCachedJSON(sourceCfg.url)
       const newData = config.proxy ? addOrReplacePrefix(data, prefixParam || defaultPrefix) : data
       
       return new Response(JSON.stringify(newData), {
@@ -203,32 +198,21 @@ async function handleHomePage(currentOrigin, defaultPrefix) {
             <div class="url-text" onclick="quickCopy('${currentOrigin}/?format=0&source=${key}')">点击复制原始链接</div>
           </td>
           <td>
-            <div class="url-text" onclick="quickCopy('${currentOrigin}/?format=1&source=${key})">点击复制中转链接</div>
+            <div class="url-text" onclick="quickCopy('${currentOrigin}/?format=1&source=${key}')">点击复制中转链接</div>
           </td>
         </tr>`).join('')}
       </tbody>
     </table>
   </div>
 
-  <div class="card">
-    <h2>🛠️ 进阶说明</h2>
-    <ul>
-      <li><code>format=1</code>: 自动转换内部 <code>api</code> 或 <code>baseUrl</code> 字段。</li>
-    </ul>
-  </div>
-
   <script>
-    // 兼容性复制核心逻辑
     async function universalCopy(text) {
-      // 优先尝试现代 API
       if (navigator.clipboard && window.isSecureContext) {
         try {
           await navigator.clipboard.writeText(text);
           return true;
         } catch (e) {}
       }
-
-      // 回退到传统 textarea 方案
       const textArea = document.createElement("textarea");
       textArea.value = text;
       textArea.style.position = "fixed";
