@@ -2,55 +2,110 @@ const fs = require("fs");
 const path = require("path");
 const axios = require("axios");
 
-// === 配置 ===
-const CONFIG_PATH = path.join(__dirname, "KVideo-config.json"); 
+// === 路径配置 ===
+const CONFIG_PATH = path.join(__dirname, "KVideo-config.json");
 const REPORT_PATH = path.join(__dirname, "report.md");
-const MAX_DAYS = 30;
-const WARN_STREAK = 3;
-const ENABLE_SEARCH_TEST = true;
 const SEARCH_KEYWORD = process.argv[2] || "斗罗大陆";
+
+// === 参数配置 ===
+const MAX_DAYS = 30;
+const WARN_STREAK = 3; // 连续失败 3 次显示 🚨
 const TIMEOUT_MS = 10000;
 const CONCURRENT_LIMIT = 10; 
-const MAX_RETRY = 3;
 
-// === 加载配置 ===
+// 1. 加载并检查配置
 if (!fs.existsSync(CONFIG_PATH)) {
-  console.error("❌ 配置文件不存在:", CONFIG_PATH);
-  process.exit(1);
+    console.error("❌ 找不到配置文件:", CONFIG_PATH);
+    process.exit(1);
 }
 
-// 核心适配：直接读取数组
 const configArray = JSON.parse(fs.readFileSync(CONFIG_PATH, "utf-8"));
 
-// 适配新字段名：baseUrl 代替了 api
+// 2. 映射字段 (适配数组格式: baseUrl, enabled)
 const apiEntries = configArray.map((s) => ({
-  name: s.name,
-  api: s.baseUrl, 
-  detail: s.id || "-", 
-  disabled: s.enabled === false, 
+    name: s.name,
+    api: s.baseUrl, 
+    id: s.id || "-",
+    disabled: s.enabled === false,
 }));
 
-// ... [此处保留你原有脚本中关于 history、safeGet、testSearch 和 queueRun 的所有函数代码] ...
+// 3. 读取历史记录 (从 report.md 提取)
+let history = [];
+if (fs.existsSync(REPORT_PATH)) {
+    const oldContent = fs.readFileSync(REPORT_PATH, "utf-8");
+    const match = oldContent.match(/```json\n([\s\S]+?)\n```/);
+    if (match) {
+        try { history = JSON.parse(match[1]); } catch (e) { history = []; }
+    }
+}
 
-// === 主逻辑修改 ===
+// 4. 并发控制函数
+const queueRun = async (tasks, limit) => {
+    const results = [];
+    const executing = new Set();
+    for (const [i, task] of tasks.entries()) {
+        const p = task().then(res => results[i] = res);
+        executing.add(p);
+        p.finally(() => executing.delete(p));
+        if (executing.size >= limit) await Promise.race(executing);
+    }
+    await Promise.all(executing);
+    return results;
+};
+
+// 5. 主逻辑
 (async () => {
-  console.log("⏳ 正在检测 API（适配数组格式）...");
+    console.log(`⏳ 开始检测 ${apiEntries.length} 个源...`);
 
-  const tasks = apiEntries.map(({ name, api, disabled }) => async () => {
-    if (disabled) return { name, api, disabled, success: false, searchStatus: "已禁用" };
+    const tasks = apiEntries.map(s => async () => {
+        if (s.disabled) return { api: s.api, success: false, search: "已禁用" };
+        try {
+            // 测试基础连接
+            const res = await axios.get(s.api, { timeout: TIMEOUT_MS });
+            const ok = res.status === 200;
+            
+            // 测试搜索功能
+            let searchResult = "-";
+            if (ok) {
+                const sRes = await axios.get(`${s.api}?wd=${encodeURIComponent(SEARCH_KEYWORD)}`, { timeout: TIMEOUT_MS });
+                searchResult = (sRes.data && sRes.data.list && sRes.data.list.length > 0) ? "✅" : "无结果";
+            }
+            return { api: s.api, success: ok, search: searchResult };
+        } catch (e) {
+            return { api: s.api, success: false, search: "❌" };
+        }
+    });
 
-    const ok = await safeGet(api);
-    const searchStatus = ENABLE_SEARCH_TEST ? await testSearch(api, SEARCH_KEYWORD) : "-";
-    return { name, api, disabled, success: ok, searchStatus };
-  });
+    const todayResults = await queueRun(tasks, CONCURRENT_LIMIT);
+    
+    // 保存历史
+    history.push({ date: new Date().toISOString().split('T')[0], results: todayResults });
+    if (history.length > MAX_DAYS) history.shift();
 
-  const todayResults = await queueRun(tasks, CONCURRENT_LIMIT);
+    // 生成表格内容
+    let tableRows = "";
+    apiEntries.forEach(s => {
+        const latest = todayResults.find(r => r.api === s.api);
+        
+        // 计算连跪次数 (Streak)
+        let streak = 0;
+        for (let i = history.length - 1; i >= 0; i--) {
+            const r = history[i].results.find(x => x.api === s.api);
+            if (r && r.success) break;
+            streak++;
+        }
 
-  // ... [此处保留原有统计和生成 Markdown 的逻辑，但确保引用的是 api 字段] ...
-  
-  // 生成报告中的表格行适配：
-  // md += `| ${s.status} | ${s.name} | ${s.detail} | [接口](${s.api}) | ${s.searchStatus} | ${s.ok} | ${s.fail} | ${s.successRate} | ${s.trend} |\n`;
+        let status = "✅";
+        if (s.disabled) status = "🚫";
+        else if (streak >= WARN_STREAK) status = "🚨";
+        else if (!latest || !latest.success) status = "❌";
 
-  fs.writeFileSync(REPORT_PATH, md, "utf-8");
-  console.log("📄 报告已生成:", REPORT_PATH);
+        tableRows += `| ${status} | ${s.name} | ${s.id} | [接口](${s.api}) | ${latest?.search || "-"} | ${streak} |\n`;
+    });
+
+    const now = new Date(Date.now() + 8 * 60 * 60 * 1000).toISOString().replace("T", " ").slice(0, 16) + " CST";
+    const reportMd = `# 接口检测报告\n\n更新时间: ${now}\n\n| 状态 | 名称 | ID | 链接 | 搜索测试 | 连跪次数 |\n|---|---|---|---|---|---|\n${tableRows}\n\n<details><summary>历史数据 (JSON)</summary>\n\n\`\`\`json\n${JSON.stringify(history, null, 2)}\n\`\`\`\n</details>`;
+
+    fs.writeFileSync(REPORT_PATH, reportMd);
+    console.log("✅ 检测完成，报告已更新。");
 })();
