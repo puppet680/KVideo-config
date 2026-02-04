@@ -23,9 +23,9 @@ const EXCLUDE_HEADERS = new Set([
 ]);
 
 const JSON_SOURCES = {
-  'lite': { name: '精简版 (Lite)', url: 'https://raw.githubusercontent.com/puppet680/KVideo-config/main/lite.json' },
-  'adult': { name: '精简成人版 (Adult)', url: 'https://raw.githubusercontent.com/puppet680/KVideo-config/main/adult.json' },
-  'full': { name: '完整版 (Full)', url: 'https://raw.githubusercontent.com/puppet680/KVideo-config/main/KVideo-config.json' }
+  'lite': { name: '精简版 (Lite)', url: 'https://fastly.jsdelivr.net/gh/puppet680/KVideo-config@main/lite.json' },
+  'adult': { name: '精简成人版 (Adult)', url: 'https://fastly.jsdelivr.net/gh/puppet680/KVideo-config@main/adult.json' },
+  'full': { name: '完整版 (Full)', url: 'https://fastly.jsdelivr.net/gh/puppet680/KVideo-config@main/KVideo-config.json' }
 };
 
 // 🔑 域名标识提取优化：增加更鲁棒的正则
@@ -118,14 +118,21 @@ async function handleProxyRequest(request, targetUrl) {
     const decodedUrl = decodeURIComponent(targetUrl);
     const targetURL = new URL(decodedUrl);
 
-    // 复制搜索参数 (除去 url)
+    // 复制搜索参数
     const originalUrl = new URL(request.url);
     originalUrl.searchParams.delete('url');
     originalUrl.searchParams.forEach((v, k) => targetURL.searchParams.append(k, v));
 
+    // 创建新的 Header 对象，避免直接修改 request.headers
+    const newReqHeaders = new Headers(request.headers);
+    newReqHeaders.set('Host', targetURL.hostname);
+    newReqHeaders.delete('cf-connecting-ip');
+    newReqHeaders.delete('cf-ipcountry');
+    newReqHeaders.delete('cf-ray');
+
     const modifiedRequest = new Request(targetURL, {
       method: request.method,
-      headers: request.headers,
+      headers: newReqHeaders, // 使用修正后的 Header
       redirect: 'follow'
     });
 
@@ -141,7 +148,7 @@ async function handleProxyRequest(request, targetUrl) {
     const contentType = response.headers.get('content-type') || '';
     if (contentType.includes('json') || contentType.includes('text') || contentType.includes('xml')) {
       let text = await response.text();
-      text = text.replace(/&nbsp;/g, ' '); // 清洗不规范的空格
+      //text = text.replace(/&nbsp;/g, ' '); // 清洗不规范的空格
       return new Response(text, { status: response.status, headers: newHeaders });
     }
 
