@@ -357,7 +357,7 @@
     "baseUrl": "https://api.guangsuapi.com/api.php/provide/vod",
     "group": "normal",
     "enabled": false,
-    "priority": 104,
+    "priority": 105,
     "_comment": "接口解析错误"
   },
   {
@@ -366,7 +366,7 @@
     "baseUrl": "https://xzybb2.com/api.php/provide/vod",
     "group": "premium",
     "enabled": false,
-    "priority": 105,
+    "priority": 106,
     "_comment": "超时/宕机"
   },
   {
@@ -375,7 +375,7 @@
     "baseUrl": "https://api.wwzy.tv/api.php/provide/vod",
     "group": "normal",
     "enabled": false,
-    "priority": 109,
+    "priority": 110,
     "_comment": "搜索无结果"
   },
   {
@@ -384,7 +384,7 @@
     "baseUrl": "https://91md.me/api.php/provide/vod",
     "group": "premium",
     "enabled": false,
-    "priority": 109,
+    "priority": 110,
     "_comment": "超时/宕机"
   },
   {
@@ -393,7 +393,7 @@
     "baseUrl": "https://www.yyzywcj.com/api.php/provide/vod",
     "group": "premium",
     "enabled": false,
-    "priority": 109,
+    "priority": 110,
     "_comment": "搜索无结果"
   },
   {
@@ -402,7 +402,7 @@
     "baseUrl": "https://apidanaizi.com/api.php/provide/vod",
     "group": "premium",
     "enabled": false,
-    "priority": 109,
+    "priority": 110,
     "_comment": "搜索无结果"
   },
   {
@@ -411,7 +411,7 @@
     "baseUrl": "https://www.msnii.com/api/json.php",
     "group": "premium",
     "enabled": false,
-    "priority": 109,
+    "priority": 110,
     "_comment": "搜索无结果"
   },
   {
@@ -420,7 +420,7 @@
     "baseUrl": "https://www.kxgav.com/api/json.php",
     "group": "premium",
     "enabled": false,
-    "priority": 109,
+    "priority": 110,
     "_comment": "搜索无结果"
   },
   {
@@ -429,7 +429,7 @@
     "baseUrl": "https://hhzyapi.com/api.php/provide/vod",
     "group": "normal",
     "enabled": false,
-    "priority": 117,
+    "priority": 118,
     "_comment": "接口解析错误"
   },
   {
@@ -438,7 +438,7 @@
     "baseUrl": "https://api.apibdzy.com/api.php/provide/vod",
     "group": "normal",
     "enabled": false,
-    "priority": 127,
+    "priority": 128,
     "_comment": "超时/宕机"
   },
   {
@@ -447,7 +447,7 @@
     "baseUrl": "https://lovedan.net/api.php/provide/vod",
     "group": "normal",
     "enabled": false,
-    "priority": 127,
+    "priority": 128,
     "_comment": "超时/宕机"
   },
   {
@@ -456,7 +456,7 @@
     "baseUrl": "https://91jpzyw.com/api.php/provide/vod",
     "group": "premium",
     "enabled": false,
-    "priority": 127,
+    "priority": 128,
     "_comment": "超时/宕机"
   },
   {
@@ -465,7 +465,7 @@
     "baseUrl": "https://api.douapi.cc/api.php/provide/vod",
     "group": "premium",
     "enabled": false,
-    "priority": 127,
+    "priority": 128,
     "_comment": "搜索无结果"
   },
   {
@@ -474,7 +474,7 @@
     "baseUrl": "https://aosikazy.com/api.php/provide/vod",
     "group": "premium",
     "enabled": false,
-    "priority": 127,
+    "priority": 128,
     "_comment": "接口解析错误"
   }
 ]
