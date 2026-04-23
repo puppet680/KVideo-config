@@ -136,14 +136,6 @@
     "priority": 5
   },
   {
-    "id": "jinying",
-    "name": "🎬金鹰点播",
-    "baseUrl": "https://jinyingzy.com/api.php/provide/vod",
-    "group": "normal",
-    "enabled": true,
-    "priority": 5
-  },
-  {
     "id": "piaoling",
     "name": "🎬飘零资源",
     "baseUrl": "https://p2100.net/api.php/provide/vod",
@@ -264,6 +256,14 @@
     "priority": 5
   },
   {
+    "id": "naixiang",
+    "name": "🔞奶香资源",
+    "baseUrl": "https://Naixxzy.com/api.php/provide/vod",
+    "group": "premium",
+    "enabled": true,
+    "priority": 5
+  },
+  {
     "id": "senlin",
     "name": "🔞森林资源",
     "baseUrl": "https://beiyong.slapibf.com/api.php/provide/vod",
@@ -368,10 +368,10 @@
     "priority": 10
   },
   {
-    "id": "naixiang",
-    "name": "🔞奶香资源",
-    "baseUrl": "https://Naixxzy.com/api.php/provide/vod",
-    "group": "premium",
+    "id": "jinying",
+    "name": "🎬金鹰点播",
+    "baseUrl": "https://jinyingzy.com/api.php/provide/vod",
+    "group": "normal",
     "enabled": false,
     "priority": 101,
     "_comment": "超时/宕机"
