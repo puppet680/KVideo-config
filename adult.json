@@ -184,6 +184,14 @@
     "priority": 5
   },
   {
+    "id": "alvin",
+    "name": "🔞--AIvin-",
+    "baseUrl": "http://lbapiby.com/api.php/provide/vod",
+    "group": "premium",
+    "enabled": true,
+    "priority": 5
+  },
+  {
     "id": "155zy",
     "name": "🔞155-资源",
     "baseUrl": "https://155api.com/api.php/provide/vod",
@@ -240,9 +248,9 @@
     "priority": 5
   },
   {
-    "id": "naixiang",
-    "name": "🔞奶香资源",
-    "baseUrl": "https://Naixxzy.com/api.php/provide/vod",
+    "id": "lebo",
+    "name": "🔞乐播资源",
+    "baseUrl": "https://lbapi9.com/api.php/provide/vod",
     "group": "premium",
     "enabled": true,
     "priority": 5
@@ -348,26 +356,16 @@
     "name": "🔞-奥斯卡-",
     "baseUrl": "https://aosikazy.com/api.php/provide/vod",
     "group": "premium",
+    "enabled": true,
+    "priority": 10
+  },
+  {
+    "id": "naixiang",
+    "name": "🔞奶香资源",
+    "baseUrl": "https://Naixxzy.com/api.php/provide/vod",
+    "group": "premium",
     "enabled": false,
     "priority": 101,
-    "_comment": "超时/宕机"
-  },
-  {
-    "id": "alvin",
-    "name": "🔞--AIvin-",
-    "baseUrl": "http://lbapiby.com/api.php/provide/vod",
-    "group": "premium",
-    "enabled": false,
-    "priority": 102,
-    "_comment": "超时/宕机"
-  },
-  {
-    "id": "lebo",
-    "name": "🔞乐播资源",
-    "baseUrl": "https://lbapi9.com/api.php/provide/vod",
-    "group": "premium",
-    "enabled": false,
-    "priority": 102,
     "_comment": "超时/宕机"
   },
   {
@@ -376,7 +374,7 @@
     "baseUrl": "https://jinyingzy.com/api.php/provide/vod",
     "group": "normal",
     "enabled": false,
-    "priority": 104,
+    "priority": 105,
     "_comment": "超时/宕机"
   },
   {
