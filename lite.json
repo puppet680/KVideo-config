@@ -128,14 +128,6 @@
     "priority": 1
   },
   {
-    "id": "maotai",
-    "name": "🎬茅台资源",
-    "baseUrl": "https://caiji.maotaizy.cc/api.php/provide/vod",
-    "group": "normal",
-    "enabled": true,
-    "priority": 5
-  },
-  {
     "id": "wolong",
     "name": "🎬卧龙资源",
     "baseUrl": "https://wolongzyw.com/api.php/provide/vod",
@@ -163,6 +155,14 @@
     "id": "subo",
     "name": "🎬速播资源",
     "baseUrl": "https://subocaiji.com/api.php/provide/vod",
+    "group": "normal",
+    "enabled": true,
+    "priority": 5
+  },
+  {
+    "id": "uku",
+    "name": "🎬U酷影视",
+    "baseUrl": "https://api.ukuapi88.com/api.php/provide/vod",
     "group": "normal",
     "enabled": true,
     "priority": 5
