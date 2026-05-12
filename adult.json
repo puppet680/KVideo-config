@@ -8,14 +8,6 @@
     "priority": 1
   },
   {
-    "id": "dbzy",
-    "name": "🎬豆瓣资源",
-    "baseUrl": "https://caiji.dbzy5.com/api.php/provide/vod",
-    "group": "normal",
-    "enabled": true,
-    "priority": 1
-  },
-  {
     "id": "ikun",
     "name": "🎬iKun资源",
     "baseUrl": "https://ikunzyapi.com/api.php/provide/vod",
@@ -256,6 +248,14 @@
     "priority": 1
   },
   {
+    "id": "maotai",
+    "name": "🎬茅台资源",
+    "baseUrl": "https://caiji.maotaizy.cc/api.php/provide/vod",
+    "group": "normal",
+    "enabled": true,
+    "priority": 5
+  },
+  {
     "id": "wolong",
     "name": "🎬卧龙资源",
     "baseUrl": "https://wolongzyw.com/api.php/provide/vod",
@@ -292,6 +292,14 @@
     "name": "🎬U酷影视",
     "baseUrl": "https://api.ukuapi88.com/api.php/provide/vod",
     "group": "normal",
+    "enabled": true,
+    "priority": 5
+  },
+  {
+    "id": "madou",
+    "name": "🔞麻豆视频",
+    "baseUrl": "https://91md.me/api.php/provide/vod",
+    "group": "premium",
     "enabled": true,
     "priority": 5
   },
@@ -376,19 +384,10 @@
     "priority": 10
   },
   {
-    "id": "maotai",
-    "name": "🎬茅台资源",
-    "baseUrl": "https://caiji.maotaizy.cc/api.php/provide/vod",
+    "id": "dbzy",
+    "name": "🎬豆瓣资源",
+    "baseUrl": "https://caiji.dbzy5.com/api.php/provide/vod",
     "group": "normal",
-    "enabled": false,
-    "priority": 101,
-    "_comment": "接口解析错误"
-  },
-  {
-    "id": "madou",
-    "name": "🔞麻豆视频",
-    "baseUrl": "https://91md.me/api.php/provide/vod",
-    "group": "premium",
     "enabled": false,
     "priority": 101,
     "_comment": "超时/宕机"
