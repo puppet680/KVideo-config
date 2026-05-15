@@ -256,9 +256,9 @@
     "priority": 5
   },
   {
-    "id": "wolong",
-    "name": "🎬卧龙资源",
-    "baseUrl": "https://wolongzyw.com/api.php/provide/vod",
+    "id": "maotai",
+    "name": "🎬茅台资源",
+    "baseUrl": "https://caiji.maotaizy.cc/api.php/provide/vod",
     "group": "normal",
     "enabled": true,
     "priority": 5
@@ -336,14 +336,6 @@
     "priority": 5
   },
   {
-    "id": "shayu",
-    "name": "🔞鲨鱼资源",
-    "baseUrl": "https://shayuapi.com/api.php/provide/vod",
-    "group": "premium",
-    "enabled": true,
-    "priority": 5
-  },
-  {
     "id": "jingpin",
     "name": "🔞精品资源",
     "baseUrl": "https://www.jingpinx.com/api.php/provide/vod",
@@ -384,10 +376,19 @@
     "priority": 10
   },
   {
-    "id": "maotai",
-    "name": "🎬茅台资源",
-    "baseUrl": "https://caiji.maotaizy.cc/api.php/provide/vod",
+    "id": "wolong",
+    "name": "🎬卧龙资源",
+    "baseUrl": "https://wolongzyw.com/api.php/provide/vod",
     "group": "normal",
+    "enabled": false,
+    "priority": 101,
+    "_comment": "超时/宕机"
+  },
+  {
+    "id": "shayu",
+    "name": "🔞鲨鱼资源",
+    "baseUrl": "https://shayuapi.com/api.php/provide/vod",
+    "group": "premium",
     "enabled": false,
     "priority": 101,
     "_comment": "超时/宕机"
