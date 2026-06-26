@@ -152,14 +152,6 @@
     "priority": 5
   },
   {
-    "id": "xinlang",
-    "name": "🎬新浪资源",
-    "baseUrl": "https://api.xinlangapi.com/xinlangapi.php/provide/vod",
-    "group": "normal",
-    "enabled": true,
-    "priority": 10
-  },
-  {
     "id": "uku",
     "name": "🎬U酷影视",
     "baseUrl": "https://api.ukuapi88.com/api.php/provide/vod",
