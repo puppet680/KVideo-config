@@ -405,4 +405,11 @@
     "group": "premium",
     "enabled": true
   }
+   {
+    "id": "korean_vod",
+    "name": "韩国影视",
+    "baseUrl": "https://api.hanju.com/api.php/provide/vod",
+    "group": "normal",
+    "enabled": true
+  }
 ]
