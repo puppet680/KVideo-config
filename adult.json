@@ -1,5 +1,21 @@
 [
   {
+    "id": "iqiyi",
+    "name": "🎬-爱奇艺-",
+    "baseUrl": "https://iqiyizyapi.com/api.php/provide/vod",
+    "group": "normal",
+    "enabled": true,
+    "priority": 1
+  },
+  {
+    "id": "ikun",
+    "name": "🎬iKun资源",
+    "baseUrl": "https://ikunzyapi.com/api.php/provide/vod",
+    "group": "normal",
+    "enabled": true,
+    "priority": 1
+  },
+  {
     "id": "dytt",
     "name": "🎬电影天堂",
     "baseUrl": "http://caiji.dyttzyapi.com/api.php/provide/vod",
@@ -192,6 +208,14 @@
     "priority": 1
   },
   {
+    "id": "jkun",
+    "name": "🔞jkun资源",
+    "baseUrl": "https://jkunzyapi.com/api.php/provide/vod",
+    "group": "premium",
+    "enabled": true,
+    "priority": 1
+  },
+  {
     "id": "lebo",
     "name": "🔞乐播资源",
     "baseUrl": "https://lbapi9.com/api.php/provide/vod",
@@ -280,18 +304,10 @@
     "priority": 1
   },
   {
-    "id": "iqiyi",
-    "name": "🎬-爱奇艺-",
-    "baseUrl": "https://iqiyizyapi.com/api.php/provide/vod",
-    "group": "normal",
-    "enabled": true,
-    "priority": 5
-  },
-  {
-    "id": "ikun",
-    "name": "🎬iKun资源",
-    "baseUrl": "https://ikunzyapi.com/api.php/provide/vod",
-    "group": "normal",
+    "id": "155zy",
+    "name": "🔞155-资源",
+    "baseUrl": "https://155api.com/api.php/provide/vod",
+    "group": "premium",
     "enabled": true,
     "priority": 5
   },
@@ -299,14 +315,6 @@
     "id": "hsck",
     "name": "🔞黄色仓库",
     "baseUrl": "https://hsckzy.xyz/api.php/provide/vod",
-    "group": "premium",
-    "enabled": true,
-    "priority": 5
-  },
-  {
-    "id": "jkun",
-    "name": "🔞jkun资源",
-    "baseUrl": "https://jkunzyapi.com/api.php/provide/vod",
     "group": "premium",
     "enabled": true,
     "priority": 5
@@ -320,21 +328,12 @@
     "priority": 10
   },
   {
-    "id": "155zy",
-    "name": "🔞155-资源",
-    "baseUrl": "https://155api.com/api.php/provide/vod",
-    "group": "premium",
-    "enabled": false,
-    "priority": 101,
-    "_comment": "超时/宕机"
-  },
-  {
     "id": "piaoling",
     "name": "🎬飘零资源",
     "baseUrl": "https://p2100.net/api.php/provide/vod",
     "group": "normal",
     "enabled": false,
-    "priority": 104,
+    "priority": 105,
     "_comment": "超时/宕机"
   },
   {
@@ -343,7 +342,7 @@
     "baseUrl": "http://lbapiby.com/api.php/provide/vod",
     "group": "premium",
     "enabled": false,
-    "priority": 127,
+    "priority": 128,
     "_comment": "超时/宕机"
   },
   {
