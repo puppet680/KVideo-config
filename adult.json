@@ -324,9 +324,8 @@
     "name": "🔞鲨鱼资源",
     "baseUrl": "https://shayuapi.com/api.php/provide/vod",
     "group": "premium",
-    "enabled": false,
-    "priority": 101,
-    "_comment": "超时/宕机"
+    "enabled": true,
+    "priority": 10
   },
   {
     "id": "piaoling",
@@ -334,16 +333,7 @@
     "baseUrl": "https://p2100.net/api.php/provide/vod",
     "group": "normal",
     "enabled": false,
-    "priority": 106,
-    "_comment": "超时/宕机"
-  },
-  {
-    "id": "alvin",
-    "name": "🔞--AIvin-",
-    "baseUrl": "http://lbapiby.com/api.php/provide/vod",
-    "group": "premium",
-    "enabled": false,
-    "priority": 129,
+    "priority": 107,
     "_comment": "超时/宕机"
   },
   {
@@ -404,6 +394,15 @@
     "id": "91jp",
     "name": "🔞91-精品-",
     "baseUrl": "https://91jpzyw.com/api.php/provide/vod",
+    "group": "premium",
+    "enabled": false,
+    "priority": 130,
+    "_comment": "超时/宕机"
+  },
+  {
+    "id": "alvin",
+    "name": "🔞--AIvin-",
+    "baseUrl": "http://lbapiby.com/api.php/provide/vod",
     "group": "premium",
     "enabled": false,
     "priority": 130,
