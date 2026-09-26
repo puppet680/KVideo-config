@@ -134,7 +134,19 @@ async function handleProxyRequest(request, targetUrlParam, currentOrigin) {
   try {
     let fullTargetUrl = decodeURIComponent(targetUrlParam);
     const targetURL = new URL(fullTargetUrl);
-    
+
+    // 仅允许代理公共 http/https 地址，阻止访问内网/本机地址，防止 SSRF
+    const hostname = targetURL.hostname.toLowerCase();
+    const isBlockedHost = !/^https?$/.test(targetURL.protocol.replace(':', ''))
+      || hostname === 'localhost'
+      || hostname.endsWith('.local')
+      || /^(127\.|10\.|0\.|169\.254\.|192\.168\.)/.test(hostname)
+      || /^172\.(1[6-9]|2\d|3[0-1])\./.test(hostname)
+      || hostname === '::1' || hostname.startsWith('fc') || hostname.startsWith('fd');
+    if (isBlockedHost) {
+      return new Response('Forbidden target address', { status: 403, headers: CORS_HEADERS });
+    }
+
     // 复制除 url 外的其他参数
     const reqUrl = new URL(request.url);
     for (const [key, value] of reqUrl.searchParams) {
