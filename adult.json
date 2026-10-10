@@ -333,7 +333,7 @@
     "baseUrl": "https://p2100.net/api.php/provide/vod",
     "group": "normal",
     "enabled": false,
-    "priority": 121,
+    "priority": 122,
     "_comment": "超时/宕机"
   },
   {
