@@ -82,7 +82,11 @@ function processJsonStructure(obj, newPrefix) {
 }
 
 // KV 缓存逻辑
+let _fetchCount = 0, _fetchWindowStart = Date.now();
 async function getCachedJSON(url) {
+  const now = Date.now();
+  if (now - _fetchWindowStart > 60000) { _fetchCount = 0; _fetchWindowStart = now; }
+  if (++_fetchCount > 30) throw new Error('Rate limit exceeded');
   const kvAvailable = typeof globalThis.KV !== 'undefined' && globalThis.KV && typeof globalThis.KV.get === 'function';
   if (kvAvailable) {
     const cacheKey = 'CACHE_' + url;
