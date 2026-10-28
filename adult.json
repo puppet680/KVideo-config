@@ -240,6 +240,14 @@
     "priority": 1
   },
   {
+    "id": "souav",
+    "name": "🔞souavZY",
+    "baseUrl": "https://api.souavzyw.net/api.php/provide/vod",
+    "group": "premium",
+    "enabled": true,
+    "priority": 1
+  },
+  {
     "id": "pgxdy",
     "name": "🔞-黄AVZY",
     "baseUrl": "https://www.pgxdy.com/api/json.php",
@@ -304,12 +312,12 @@
     "priority": 5
   },
   {
-    "id": "souav",
-    "name": "🔞souavZY",
-    "baseUrl": "https://api.souavzyw.net/api.php/provide/vod",
-    "group": "premium",
+    "id": "xinlang",
+    "name": "🎬新浪资源",
+    "baseUrl": "https://api.xinlangapi.com/xinlangapi.php/provide/vod",
+    "group": "normal",
     "enabled": true,
-    "priority": 5
+    "priority": 10
   },
   {
     "id": "shayu",
@@ -318,15 +326,6 @@
     "group": "premium",
     "enabled": true,
     "priority": 10
-  },
-  {
-    "id": "xinlang",
-    "name": "🎬新浪资源",
-    "baseUrl": "https://api.xinlangapi.com/xinlangapi.php/provide/vod",
-    "group": "normal",
-    "enabled": false,
-    "priority": 104,
-    "_comment": "接口解析错误"
   },
   {
     "id": "dbzy",
