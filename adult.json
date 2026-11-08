@@ -325,7 +325,7 @@
     "baseUrl": "https://Naixxzy.com/api.php/provide/vod",
     "group": "premium",
     "enabled": false,
-    "priority": 106,
+    "priority": 107,
     "_comment": "接口解析错误"
   },
   {
