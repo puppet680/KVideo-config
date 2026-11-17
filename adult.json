@@ -304,18 +304,18 @@
     "priority": 5
   },
   {
-    "id": "xinlang",
-    "name": "🎬新浪资源",
-    "baseUrl": "https://api.xinlangapi.com/xinlangapi.php/provide/vod",
-    "group": "normal",
-    "enabled": true,
-    "priority": 10
-  },
-  {
     "id": "shayu",
     "name": "🔞鲨鱼资源",
     "baseUrl": "https://shayuapi.com/api.php/provide/vod",
     "group": "premium",
+    "enabled": true,
+    "priority": 5
+  },
+  {
+    "id": "xinlang",
+    "name": "🎬新浪资源",
+    "baseUrl": "https://api.xinlangapi.com/xinlangapi.php/provide/vod",
+    "group": "normal",
     "enabled": true,
     "priority": 10
   },
@@ -325,7 +325,7 @@
     "baseUrl": "https://Naixxzy.com/api.php/provide/vod",
     "group": "premium",
     "enabled": false,
-    "priority": 114,
+    "priority": 115,
     "_comment": "接口解析错误"
   },
   {
