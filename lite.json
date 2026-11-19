@@ -40,14 +40,6 @@
     "priority": 1
   },
   {
-    "id": "jisu",
-    "name": "🎬极速资源",
-    "baseUrl": "https://jszyapi.com/api.php/provide/vod",
-    "group": "normal",
-    "enabled": true,
-    "priority": 1
-  },
-  {
     "id": "feifan",
     "name": "🎬非凡资源",
     "baseUrl": "https://api.ffzyapi.com/api.php/provide/vod",
@@ -123,14 +115,6 @@
     "id": "zuida",
     "name": "🎬最大资源",
     "baseUrl": "https://api.zuidapi.com/api.php/provide/vod",
-    "group": "normal",
-    "enabled": true,
-    "priority": 5
-  },
-  {
-    "id": "jinying",
-    "name": "🎬金鹰点播",
-    "baseUrl": "https://jinyingzy.com/api.php/provide/vod",
     "group": "normal",
     "enabled": true,
     "priority": 5
